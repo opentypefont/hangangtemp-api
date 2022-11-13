@@ -90,20 +90,12 @@ func main() {
 
 			statusCode = http.StatusInternalServerError
 		} else {
-			response, err = json.Marshal(Response{
+			response, _ = json.Marshal(Response{
 				Code: 200,
 				Data: hangangTemperature,
 			})
-			if err != nil {
-				response, _ = json.Marshal(Response{
-					Code: 500,
-					Data: map[string]string{"message": err.Error()},
-				})
 
-				statusCode = http.StatusInternalServerError
-			} else {
-				statusCode = 200
-			}
+			statusCode = http.StatusOK
 		}
 		writer.WriteHeader(statusCode)
 		_, _ = writer.Write(response)
